@@ -1,0 +1,39 @@
+# This file contains metadata for your plugin. Since 
+# version 2.0 of QGIS this is the proper way to supply 
+# information about a plugin. The old method of 
+# embedding metadata in __init__.py will 
+# is no longer supported since version 2.0.
+
+# This file should be included when you package your plugin.# Mandatory items:
+
+[general]
+name=StreetAnalysis
+qgisMinimumVersion=2.0
+description=Analysis for Streets
+version=0.1
+author=Mark Altaweel
+email=maltaweel@ucl.ac.uk
+
+about=Module for analysing streets traveled from every node in networked streets. It also provides analyses of the network of streets to provide data on node centrality and  efficiency measures. The modul has been used to assess modern and ancient street networks applying space syntax methods. There are two dependencies needed, which are networkx (2.2) and pysal (1.14). Users are encouraged to look at https://networkx.github.io/documentation/stable/install.html and https://pysal.readthedocs.io/en/latest/users/installation.html for installation of these two libraries.
+
+tracker=http://bugs
+repository=http://repo
+# End of mandatory metadata
+
+# Recommended items:
+
+# Uncomment the following line and add your changelog:
+# changelog=
+
+# Tags are comma separated with spaces allowed
+tags=python
+
+homepage=http://homepage
+category=Plugins
+icon=images.png
+# experimental flag
+experimental=False
+
+# deprecated flag (applies to the whole plugin, not just a single version)
+deprecated=False
+

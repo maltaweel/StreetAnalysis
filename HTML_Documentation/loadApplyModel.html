@@ -1,0 +1,103 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module loadApplyModel</title>
+<meta charset="utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>loadApplyModel</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/mark/.qgis2/python/plugins/StreetAnalysis/loadApplyModel.py">/home/mark/.qgis2/python/plugins/StreetAnalysis/loadApplyModel.py</a></font></td></tr></table>
+    <p><tt>Analysis&nbsp;to&nbsp;look&nbsp;at&nbsp;all&nbsp;possible&nbsp;areas&nbsp;traversed&nbsp;based&nbsp;on&nbsp;road&nbsp;segments&nbsp;and&nbsp;starting&nbsp;points&nbsp;within&nbsp;road&nbsp;segments.<br>
+&nbsp;<br>
+Created&nbsp;on&nbsp;Nov&nbsp;7,&nbsp;2018<br>
+&nbsp;<br>
+__author__:&nbsp;Mark&nbsp;Altaweel<br>
+__version__:&nbsp;1.0</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="csv.html">csv</a><br>
+<a href="graph.html">graph</a><br>
+</td><td width="25%" valign=top><a href="math.html">math</a><br>
+<a href="networkx.html">networkx</a><br>
+</td><td width="25%" valign=top><a href="os.html">os</a><br>
+<a href="pysal.html">pysal</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-inNodes"><strong>inNodes</strong></a>(node, nodes)</dt><dd><tt>Method&nbsp;for&nbsp;checking&nbsp;to&nbsp;see&nbsp;if&nbsp;the&nbsp;nodes&nbsp;already&nbsp;part&nbsp;of&nbsp;the&nbsp;road&nbsp;network<br>
+node--&nbsp;the&nbsp;node&nbsp;to&nbsp;check<br>
+nodes--&nbsp;the&nbsp;container&nbsp;for&nbsp;the&nbsp;nodes&nbsp;to&nbsp;check&nbsp;from.</tt></dd></dl>
+ <dl><dt><a name="-load"><strong>load</strong></a>(fileName)</dt><dd><tt>Load&nbsp;the&nbsp;data&nbsp;and&nbsp;creating&nbsp;the&nbsp;links&nbsp;for&nbsp;the&nbsp;network&nbsp;from&nbsp;street&nbsp;segment&nbsp;file.&nbsp;The&nbsp;method&nbsp;returns&nbsp;a&nbsp;graph&nbsp;with&nbsp;all&nbsp;edges&nbsp;in&nbsp;the&nbsp;street&nbsp;network.<br>
+fileName&nbsp;--&nbsp;the&nbsp;shapefile&nbsp;name&nbsp;to&nbsp;assess.</tt></dd></dl>
+ <dl><dt><a name="-output"><strong>output</strong></a>(outputFolder, edgesS, G)</dt><dd><tt>Method&nbsp;to&nbsp;do&nbsp;the&nbsp;output&nbsp;of&nbsp;the&nbsp;links&nbsp;travelled.<br>
+--outputFolder&nbsp;the&nbsp;output&nbsp;folder&nbsp;to&nbsp;put&nbsp;the&nbsp;results.csv&nbsp;file&nbsp;in<br>
+--edgesS&nbsp;the&nbsp;edges&nbsp;to&nbsp;produce&nbsp;the&nbsp;traveresed&nbsp;outputs&nbsp;from&nbsp;the&nbsp;overall&nbsp;street&nbsp;graph.<br>
+--G&nbsp;the&nbsp;network&nbsp;that&nbsp;is&nbsp;assessed</tt></dd></dl>
+ <dl><dt><a name="-qAlpha"><strong>qAlpha</strong></a>(...)</dt><dd><tt><a href="#-qAlpha">qAlpha</a>(int)&nbsp;-&gt;&nbsp;int</tt></dd></dl>
+ <dl><dt><a name="-qBlue"><strong>qBlue</strong></a>(...)</dt><dd><tt><a href="#-qBlue">qBlue</a>(int)&nbsp;-&gt;&nbsp;int</tt></dd></dl>
+ <dl><dt><a name="-qDrawBorderPixmap"><strong>qDrawBorderPixmap</strong></a>(...)</dt><dd><tt><a href="#-qDrawBorderPixmap">qDrawBorderPixmap</a>(QPainter,&nbsp;QRect,&nbsp;QMargins,&nbsp;QPixmap)</tt></dd></dl>
+ <dl><dt><a name="-qDrawPlainRect"><strong>qDrawPlainRect</strong></a>(...)</dt><dd><tt><a href="#-qDrawPlainRect">qDrawPlainRect</a>(QPainter,&nbsp;int,&nbsp;int,&nbsp;int,&nbsp;int,&nbsp;QColor,&nbsp;int&nbsp;lineWidth=1,&nbsp;QBrush&nbsp;fill=None)<br>
+<a href="#-qDrawPlainRect">qDrawPlainRect</a>(QPainter,&nbsp;QRect,&nbsp;QColor,&nbsp;int&nbsp;lineWidth=1,&nbsp;QBrush&nbsp;fill=None)</tt></dd></dl>
+ <dl><dt><a name="-qDrawShadeLine"><strong>qDrawShadeLine</strong></a>(...)</dt><dd><tt><a href="#-qDrawShadeLine">qDrawShadeLine</a>(QPainter,&nbsp;int,&nbsp;int,&nbsp;int,&nbsp;int,&nbsp;QPalette,&nbsp;bool&nbsp;sunken=True,&nbsp;int&nbsp;lineWidth=1,&nbsp;int&nbsp;midLineWidth=0)<br>
+<a href="#-qDrawShadeLine">qDrawShadeLine</a>(QPainter,&nbsp;QPoint,&nbsp;QPoint,&nbsp;QPalette,&nbsp;bool&nbsp;sunken=True,&nbsp;int&nbsp;lineWidth=1,&nbsp;int&nbsp;midLineWidth=0)</tt></dd></dl>
+ <dl><dt><a name="-qDrawShadePanel"><strong>qDrawShadePanel</strong></a>(...)</dt><dd><tt><a href="#-qDrawShadePanel">qDrawShadePanel</a>(QPainter,&nbsp;int,&nbsp;int,&nbsp;int,&nbsp;int,&nbsp;QPalette,&nbsp;bool&nbsp;sunken=False,&nbsp;int&nbsp;lineWidth=1,&nbsp;QBrush&nbsp;fill=None)<br>
+<a href="#-qDrawShadePanel">qDrawShadePanel</a>(QPainter,&nbsp;QRect,&nbsp;QPalette,&nbsp;bool&nbsp;sunken=False,&nbsp;int&nbsp;lineWidth=1,&nbsp;QBrush&nbsp;fill=None)</tt></dd></dl>
+ <dl><dt><a name="-qDrawShadeRect"><strong>qDrawShadeRect</strong></a>(...)</dt><dd><tt><a href="#-qDrawShadeRect">qDrawShadeRect</a>(QPainter,&nbsp;int,&nbsp;int,&nbsp;int,&nbsp;int,&nbsp;QPalette,&nbsp;bool&nbsp;sunken=False,&nbsp;int&nbsp;lineWidth=1,&nbsp;int&nbsp;midLineWidth=0,&nbsp;QBrush&nbsp;fill=None)<br>
+<a href="#-qDrawShadeRect">qDrawShadeRect</a>(QPainter,&nbsp;QRect,&nbsp;QPalette,&nbsp;bool&nbsp;sunken=False,&nbsp;int&nbsp;lineWidth=1,&nbsp;int&nbsp;midLineWidth=0,&nbsp;QBrush&nbsp;fill=None)</tt></dd></dl>
+ <dl><dt><a name="-qDrawWinButton"><strong>qDrawWinButton</strong></a>(...)</dt><dd><tt><a href="#-qDrawWinButton">qDrawWinButton</a>(QPainter,&nbsp;int,&nbsp;int,&nbsp;int,&nbsp;int,&nbsp;QPalette,&nbsp;bool&nbsp;sunken=False,&nbsp;QBrush&nbsp;fill=None)<br>
+<a href="#-qDrawWinButton">qDrawWinButton</a>(QPainter,&nbsp;QRect,&nbsp;QPalette,&nbsp;bool&nbsp;sunken=False,&nbsp;QBrush&nbsp;fill=None)</tt></dd></dl>
+ <dl><dt><a name="-qDrawWinPanel"><strong>qDrawWinPanel</strong></a>(...)</dt><dd><tt><a href="#-qDrawWinPanel">qDrawWinPanel</a>(QPainter,&nbsp;int,&nbsp;int,&nbsp;int,&nbsp;int,&nbsp;QPalette,&nbsp;bool&nbsp;sunken=False,&nbsp;QBrush&nbsp;fill=None)<br>
+<a href="#-qDrawWinPanel">qDrawWinPanel</a>(QPainter,&nbsp;QRect,&nbsp;QPalette,&nbsp;bool&nbsp;sunken=False,&nbsp;QBrush&nbsp;fill=None)</tt></dd></dl>
+ <dl><dt><a name="-qFuzzyCompare"><strong>qFuzzyCompare</strong></a>(...)</dt><dd><tt><a href="#-qFuzzyCompare">qFuzzyCompare</a>(QMatrix,&nbsp;QMatrix)&nbsp;-&gt;&nbsp;bool<br>
+<a href="#-qFuzzyCompare">qFuzzyCompare</a>(QMatrix4x4,&nbsp;QMatrix4x4)&nbsp;-&gt;&nbsp;bool<br>
+<a href="#-qFuzzyCompare">qFuzzyCompare</a>(QQuaternion,&nbsp;QQuaternion)&nbsp;-&gt;&nbsp;bool<br>
+<a href="#-qFuzzyCompare">qFuzzyCompare</a>(QTransform,&nbsp;QTransform)&nbsp;-&gt;&nbsp;bool<br>
+<a href="#-qFuzzyCompare">qFuzzyCompare</a>(QVector2D,&nbsp;QVector2D)&nbsp;-&gt;&nbsp;bool<br>
+<a href="#-qFuzzyCompare">qFuzzyCompare</a>(QVector3D,&nbsp;QVector3D)&nbsp;-&gt;&nbsp;bool<br>
+<a href="#-qFuzzyCompare">qFuzzyCompare</a>(QVector4D,&nbsp;QVector4D)&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+ <dl><dt><a name="-qGray"><strong>qGray</strong></a>(...)</dt><dd><tt><a href="#-qGray">qGray</a>(int,&nbsp;int,&nbsp;int)&nbsp;-&gt;&nbsp;int<br>
+<a href="#-qGray">qGray</a>(int)&nbsp;-&gt;&nbsp;int</tt></dd></dl>
+ <dl><dt><a name="-qGreen"><strong>qGreen</strong></a>(...)</dt><dd><tt><a href="#-qGreen">qGreen</a>(int)&nbsp;-&gt;&nbsp;int</tt></dd></dl>
+ <dl><dt><a name="-qIsGray"><strong>qIsGray</strong></a>(...)</dt><dd><tt><a href="#-qIsGray">qIsGray</a>(int)&nbsp;-&gt;&nbsp;bool</tt></dd></dl>
+ <dl><dt><a name="-qRed"><strong>qRed</strong></a>(...)</dt><dd><tt><a href="#-qRed">qRed</a>(int)&nbsp;-&gt;&nbsp;int</tt></dd></dl>
+ <dl><dt><a name="-qRgb"><strong>qRgb</strong></a>(...)</dt><dd><tt><a href="#-qRgb">qRgb</a>(int,&nbsp;int,&nbsp;int)&nbsp;-&gt;&nbsp;int</tt></dd></dl>
+ <dl><dt><a name="-qRgba"><strong>qRgba</strong></a>(...)</dt><dd><tt><a href="#-qRgba">qRgba</a>(int,&nbsp;int,&nbsp;int,&nbsp;int)&nbsp;-&gt;&nbsp;int</tt></dd></dl>
+ <dl><dt><a name="-qSwap"><strong>qSwap</strong></a>(...)</dt><dd><tt><a href="#-qSwap">qSwap</a>(QBitmap,&nbsp;QBitmap)<br>
+<a href="#-qSwap">qSwap</a>(QBrush,&nbsp;QBrush)<br>
+<a href="#-qSwap">qSwap</a>(QIcon,&nbsp;QIcon)<br>
+<a href="#-qSwap">qSwap</a>(QImage,&nbsp;QImage)<br>
+<a href="#-qSwap">qSwap</a>(QKeySequence,&nbsp;QKeySequence)<br>
+<a href="#-qSwap">qSwap</a>(QPen,&nbsp;QPen)<br>
+<a href="#-qSwap">qSwap</a>(QPicture,&nbsp;QPicture)<br>
+<a href="#-qSwap">qSwap</a>(QPixmap,&nbsp;QPixmap)</tt></dd></dl>
+ <dl><dt><a name="-qt_x11_wait_for_window_manager"><strong>qt_x11_wait_for_window_manager</strong></a>(...)</dt><dd><tt><a href="#-qt_x11_wait_for_window_manager">qt_x11_wait_for_window_manager</a>(QWidget)</tt></dd></dl>
+ <dl><dt><a name="-run"><strong>run</strong></a>()</dt><dd><tt>Method&nbsp;to&nbsp;call&nbsp;and&nbsp;run&nbsp;the&nbsp;analysis.</tt></dd></dl>
+ <dl><dt><a name="-runLinks"><strong>runLinks</strong></a>(G)</dt><dd><tt>Applying&nbsp;the&nbsp;shortest&nbsp;path&nbsp;algorithm&nbsp;from&nbsp;each&nbsp;point&nbsp;of&nbsp;the&nbsp;road&nbsp;segments<br>
+G--&nbsp;the&nbsp;road&nbsp;network/graph&nbsp;representation.</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>QWIDGETSIZE_MAX</strong> = 16777215<br>
+<strong>links</strong> = []<br>
+<strong>linkz</strong> = {}<br>
+<strong>nodes</strong> = {}<br>
+<strong>nodesS</strong> = []<br>
+<strong>oldNodes</strong> = {}<br>
+<strong>qApp</strong> = &lt;PyQt4.QtGui.QApplication object&gt;</td></tr></table>
+</body></html>
