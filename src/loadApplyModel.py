@@ -14,13 +14,17 @@ Imports needed for this module
 
 import pysal
 import os
+import sys
 import math
 #import matplotlib.pyplot as plt
 import networkx as nx
 import graph
 import csv
-from PyQt4.QtGui import *
 
+from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtWidgets import QLineEdit
+from PyQt5.QtWidgets import QInputDialog
+from PyQt5.QtWidgets import QApplication
 '''
 container used for nodes analysed and not to duplicate
 '''
@@ -192,6 +196,8 @@ def run():
     '''
     Method to call and run the analysis.
     '''
+    app = QApplication(sys.argv)
+    
     qid = QFileDialog()
 #    fileName = "Enter the file to analyise here."
     filename=QFileDialog.getOpenFileName()
@@ -205,3 +211,5 @@ def run():
     G=load(filename)
     edgesS=runLinks(G)
     output(text2,edgesS,G)
+
+run()

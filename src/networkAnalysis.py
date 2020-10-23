@@ -17,7 +17,7 @@ import networkx as nx
 import math
 import csv
 import os
-from PyQt4.QtGui import *
+from PyQt5.QtGui import *
 
 '''
 the filename for the shapefile analyzed
@@ -76,7 +76,7 @@ def runGlobalEfficiency(G):
                     
                     
                     
-    print"efficiency measure: "+ str(float(glob)/(float(nx.number_of_nodes(G)*(nx.number_of_nodes(G)-1.0))))
+    print("efficiency measure: "+ str(float(glob)/(float(nx.number_of_nodes(G)*(nx.number_of_nodes(G)-1.0)))))
     return float(glob)/(float(nx.number_of_nodes(G)*(nx.number_of_nodes(G)-1.0)))
 
 
@@ -93,14 +93,14 @@ def centralityMeasures(G):
     deg_cen = nx.degree_centrality(G)
     
     #print bet_cen, clo_cen, eig_cen
-    print "# Betweenness centrality:" + str(bet_cen)
-    print "# Closeness centrality:" + str(clo_cen)
-    print "# Degree centrality:" + str(deg_cen)
+    print  ("# Betweenness centrality:" + str(bet_cen))
+    print ("# Closeness centrality:" + str(clo_cen))
+    print ("# Degree centrality:" + str(deg_cen))
     
     return bet_cen,clo_cen,deg_cen
 
 def efficiencyCentrality(G):
-    '''Method conducts efficiency centrality onn the graph.
+    '''Method conducts efficiency centrality on the graph.
     G-- the graph to be analyzed
     '''
     nodes, nodes2=nodez(G)
