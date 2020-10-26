@@ -17,7 +17,12 @@ import networkx as nx
 import math
 import csv
 import os
-from PyQt5.QtGui import *
+import sys
+
+from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtWidgets import QLineEdit
+from PyQt5.QtWidgets import QInputDialog
+from PyQt5.QtWidgets import QApplication
 
 '''
 the filename for the shapefile analyzed
@@ -31,7 +36,7 @@ def getOutuptPath(text2,fileType):
     fileType -- the file to output to the output folder
     '''
 #   p=os.path.abspath(text2)
-    fileN=os.path.join(text2,fileType)
+    fileN=os.path.join(text2[0],fileType)
     return fileN
 
 def nodez(G):
@@ -178,7 +183,7 @@ def printResults(results,loc,fileType):
         
     fieldnames = ['id','x','y','value']
         
-    with open(fileN, 'wb') as csvf:
+    with open(fileN, 'w') as csvf:
         writer = csv.DictWriter(csvf, fieldnames=fieldnames)
 
         writer.writeheader()
@@ -218,7 +223,7 @@ def printNodeCentrality(loc,fileType,bet,cent,degree):
      
     fieldnames = ['id','x','y','betweenness','closeness','degree']
         
-    with open(fileN, 'wb') as csvf:
+    with open(fileN, 'w') as csvf:
         writer = csv.DictWriter(csvf, fieldnames=fieldnames)
 
         writer.writeheader()
@@ -240,6 +245,8 @@ def run():
     '''
     Method to call and run the analysis.
     '''
+    app = QApplication(sys.argv)
+    
     qid = QFileDialog()
 
     #fileName = "Enter the file to analyise here."
@@ -249,7 +256,7 @@ def run():
     outputFolder = "Enter the output folder location here."
     mode = QLineEdit.Normal
     #text, ok = QInputDialog.getText(qid,outputFolder,filename, mode)
-    text2, ok = QInputDialog.getText(qid,filename, outputFolder, mode)
+    text2 = QInputDialog.getText(qid,filename[0], outputFolder, mode)
     
     G=loadApplyModel.load(filename)
     res=runGlobalEfficiency(G)
@@ -265,3 +272,6 @@ def run():
     printResults(result2,text2,"straightnessCentrality.csv")
     
     printNodeCentrality(text2,'nodeCentrality.csv',bet,clos,deg)
+
+if __name__ == '__main__':
+    run()
