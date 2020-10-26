@@ -89,18 +89,18 @@ class StreetAnalysis:
     def runThis(self):
 	'''Method to run and launch the gui based on selected options by the user.'''
         app = QApplication([])
-	win = QMainWindow()
-#	win.closeEvent=
-#	win.setWindowFlags(0)
-#	win.setFixedSize(QSize(1000,1000))
-#	win.show()
-	dir=self.locale_path.split("i18n")[0]
+        win = QMainWindow()
+        #	win.closeEvent=
+        #	win.setWindowFlags(0)
+        #	win.setFixedSize(QSize(1000,1000))
+        #	win.show()
+        dir=self.locale_path.split("i18n")[0]
 	
-	fine=os.path.join(dir,'help.pdf')
-	if os.name=='posix':
-		subprocess.Popen("evince '%s'" % fine, shell=True)
-	else:
-		os.startfile('example.pdf')
+        fine=os.path.join(dir,'help.pdf')
+        if os.name=='posix':
+            subprocess.Popen("evince '%s'" % fine, shell=True)
+        else:
+            os.startfile('example.pdf')
 	
     def add_action(
         self,
@@ -204,38 +204,36 @@ class StreetAnalysis:
         """Run method that performs all the real work"""
 
         self.dlg.show()
-	result=self.dlg.exec_()
+        result=self.dlg.exec_()
 
-	children=self.dlg.findChildren(QRadioButton)
-	secondChildren=self.dlg.findChildren(QPushButton)
+        children=self.dlg.findChildren(QRadioButton)
+        secondChildren=self.dlg.findChildren(QPushButton)
 
-	self.choices=[]
-	for child in children:
-		if child.isChecked() is True:
-			print('child')
-			self.choices.append(child)
-	
-	for c in secondChildren:
-		if c.isEnabled():
-			self.choices.append(c)				
+        self.choices=[]
+        for child in children:
+            if child.isChecked() is True:
+                print('child')
+                self.choices.append(child)
 
-	#show the dialog
-#	self.dlg.show()
+        for c in secondChildren:
+            if c.isEnabled():
+                self.choices.append(c)				
 
-	# Run the dialog event loop
-#        result = self.dlg.exec_()
-	
+        #show the dialog
+        #self.dlg.show()
 
+        #Run the dialog event loop
+        #result = self.dlg.exec_()
         # See if OK was pressed
         if result:
             # Do something useful here - delete the line containing pass and
             # substitute with your code.
-	    for c in self.choices:
-		 if c.text() == "Street Network Analysis":
-           	 	loadApplyModel.run()
+            for c in self.choices:
+                if c.text() == "Street Network Analysis":
+                    loadApplyModel.run()
 
-		 elif c.text()=="Road Graph Analysis":
-			networkAnalysis.run()
+        elif c.text()=="Road Graph Analysis":
+            networkAnalysis.run()
 
-		 elif c.text()=='?':
-			self.runThis()
+        elif c.text()=='?':
+            self.runThis()

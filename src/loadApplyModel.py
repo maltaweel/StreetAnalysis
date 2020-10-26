@@ -58,7 +58,7 @@ def load(fileName):
     fileName -- the shapefile name to assess.
     '''
     
-    shp = pysal.open(fileName)
+    shp = pysal.open(fileName[0])
 
     node1=0
     node2=0
@@ -149,11 +149,11 @@ def output(outputFolder,edgesS,G):
     '''
     #pn='/home/mark/Papers/New_Book/Documents/Chapter2/dura_europas/'
    
-    filename=outputFolder+'/'+'results.csv'
+    filename=outputFolder[0]+'/'+'results.csv'
         
     fieldnames = ['id','x','y','count']
         
-    with open(filename, 'wb') as csvf:
+    with open(filename, 'w') as csvf:
         writer = csv.DictWriter(csvf, fieldnames=fieldnames)
 
         writer.writeheader()
@@ -205,11 +205,12 @@ def run():
     outputFolder = "Enter the output folder location here."
     mode = QLineEdit.Normal
 #    text, ok = QInputDialog.getText(qid,outputFolder,fileName, mode)
-    text2, ok = QInputDialog.getText(qid,filename, outputFolder, mode)
+    text2 = QInputDialog.getText(qid,filename[0], outputFolder, mode)
 
 
     G=load(filename)
     edgesS=runLinks(G)
     output(text2,edgesS,G)
 
-run()
+if __name__ == '__main__':
+    run()
