@@ -50,16 +50,15 @@ class StreetAnalysisDialog(QDialog, FORM_CLASS):
         layout=QVBoxLayout(self)
 
         children=self.findChildren(QRadioButton)
+        self.choices=[]
 
-	self.choices=[]
+        for child in children:
+            if child.isChecked() is True:
+                self.choices.append(child)
 
-	for child in children:
-		if child.isChecked() is True:
-			self.choices.append(child)
-
-#	self.r1 = QtGui.QRadioButton("Street Network Analysis")
-#	self.r2=QtGui.QRadioButton("Graph Analysis")
-#	layout.addWidget(self.r1)
-#	layout.addWidget(self.r2)
-	self.setupUi(self)
+        #	self.r1 = QtGui.QRadioButton("Street Network Analysis")
+        #	self.r2=QtGui.QRadioButton("Graph Analysis")
+        #	layout.addWidget(self.r1)
+        #	layout.addWidget(self.r2)
+        self.setupUi(self)
 	
