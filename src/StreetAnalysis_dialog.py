@@ -25,14 +25,16 @@ The  imports
 '''
 import os
 
-from PyQt4 import QtGui, uic
-
+from PyQt5 import QtGui, uic
+from PyQt5.QtWidgets import QDialog
+from PyQt5.QtWidgets import QVBoxLayout
+from PyQt5.QtWidgets import QRadioButton
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'StreetAnalysis_dialog_base.ui'))
 
 
-class StreetAnalysisDialog(QtGui.QDialog, FORM_CLASS):
+class StreetAnalysisDialog(QDialog, FORM_CLASS):
     def __init__(self, parent=None):
         """
         Constructor
@@ -45,9 +47,9 @@ class StreetAnalysisDialog(QtGui.QDialog, FORM_CLASS):
         # self.<objectname>, and you can use autoconnect slots - see
         # http://qt-project.org/doc/qt-4.8/designer-using-a-ui-file.html
         # #widgets-and-dialogs-with-auto-connect
-        layout=QtGui.QVBoxLayout(self)
+        layout=QVBoxLayout(self)
 
-        children=self.findChildren(QtGui.QRadioButton)
+        children=self.findChildren(QRadioButton)
 
 	self.choices=[]
 

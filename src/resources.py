@@ -7,7 +7,9 @@ Resource object code
 
  WARNING! All changes made in this file will be lost!
 '''
-from PyQt4 import QtCore
+from PyQt5 import QtCore
+import sys
+
 
 qt_resource_data = "\
 \x00\x00\x00\xe0\
@@ -27,7 +29,7 @@ qt_resource_data = "\
 \x4e\xae\x07\x71\x1a\x45\x15\x3b\x28\x06\x00\x5b\x68\x00\x4d\xb9\
 \xfd\xad\xea\x00\x00\x00\x00\x49\x45\x4e\x44\xae\x42\x60\x82\
 "
-
+qt_resource_data.encode(encoding='UTF-8')
 qt_resource_name = "\
 \x00\x07\
 \x07\x3b\xe0\xb3\
@@ -42,18 +44,19 @@ qt_resource_name = "\
 \x00\x69\
 \x00\x63\x00\x6f\x00\x6e\x00\x2e\x00\x70\x00\x6e\x00\x67\
 "
-
+qt_resource_name.encode(encoding='UTF-8')
 qt_resource_struct = "\
 \x00\x00\x00\x00\x00\x02\x00\x00\x00\x01\x00\x00\x00\x01\
 \x00\x00\x00\x00\x00\x02\x00\x00\x00\x01\x00\x00\x00\x02\
 \x00\x00\x00\x14\x00\x02\x00\x00\x00\x01\x00\x00\x00\x03\
 \x00\x00\x00\x36\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\
 "
+qt_resource_struct.encode(encoding='UTF-8')
 
 def qInitResources():
-    QtCore.qRegisterResourceData(0x01, qt_resource_struct, qt_resource_name, qt_resource_data)
+    QtCore.qRegisterResourceData(0x01, bytes(qt_resource_struct), qt_resource_name, bytes(qt_resource_data))
 
 def qCleanupResources():
-    QtCore.qUnregisterResourceData(0x01, qt_resource_struct, qt_resource_name, qt_resource_data)
+    QtCore.qUnregisterResourceData(0x01, bytes(qt_resource_struct), qt_resource_name, qt_resource_data)
 
 qInitResources()

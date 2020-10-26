@@ -20,8 +20,24 @@
  *                                                                         *
  ***************************************************************************/
 """
-from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, QSize
-from PyQt4.QtGui import QAction, QIcon, QRadioButton, QFileDialog, QPushButton, QApplication, QMainWindow
+from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtWidgets import QLineEdit
+from PyQt5.QtWidgets import QInputDialog
+from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QRadioButton
+from PyQt5.QtWidgets import QAction
+from PyQt5.QtWidgets import QPushButton
+
+
+from PyQt5.QtGui import QIcon 
+
+from PyQt5.QtCore import QSettings
+from PyQt5.QtCore import QTranslator
+from PyQt5.QtCore import qVersion
+from PyQt5.QtCore import QCoreApplication
+
+
 # Initialize Qt resources from file resources.py
 import resources
 # Import the code for the dialog
@@ -86,8 +102,10 @@ class StreetAnalysis:
         # noinspection PyTypeChecker,PyArgumentList,PyCallByClass
         return QCoreApplication.translate('StreetAnalysis', message)
  
+    '''
+    Method to run and launch the gui based on selected options by the user.
+     '''
     def runThis(self):
-	'''Method to run and launch the gui based on selected options by the user.'''
         app = QApplication([])
         win = QMainWindow()
         #	win.closeEvent=
