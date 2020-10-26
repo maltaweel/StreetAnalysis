@@ -8,7 +8,7 @@ Resource object code
  WARNING! All changes made in this file will be lost!
 '''
 from PyQt5 import QtCore
-import sys
+
 
 
 qt_resource_data = b"\
