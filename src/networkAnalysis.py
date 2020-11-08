@@ -12,12 +12,13 @@ __version__: 1.0
 '''
 libraries to load
 '''
-import loadApplyModel
+
 import networkx as nx
 import math
 import csv
 import os
 import sys
+import loadApplyModel
 
 from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtWidgets import QLineEdit

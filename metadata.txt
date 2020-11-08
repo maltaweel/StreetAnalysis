@@ -8,7 +8,7 @@
 
 [general]
 name=StreetAnalysis
-qgisMinimumVersion=2.0
+qgisMinimumVersion=3.0
 description=Analysis for Streets
 version=0.1
 author=Mark Altaweel

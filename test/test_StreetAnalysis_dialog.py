@@ -14,7 +14,9 @@ __copyright__ = 'Copyright 2018, Mark Altaweel'
 
 import unittest
 
-from PyQt4.QtGui import QDialogButtonBox, QDialog
+from PyQt5.QtWidgets import QDialog
+from PyQt5.QtWidgets import QDialogButtonBox
+
 
 from StreetAnalysis_dialog import StreetAnalysisDialog
 

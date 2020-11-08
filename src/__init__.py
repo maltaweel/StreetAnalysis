@@ -22,6 +22,11 @@
  This script initializes the plugin, making it known to QGIS.
 """
 
+__all__ = ['graph', 'loadApplyModel', 'networkAnalysis', 'resources',
+           'StreetAnalysis_dialog', 'StreetAnalysis']
+
+
+from .StreetAnalysis import StreetAnalysis
 
 # noinspection PyPep8Naming
 def classFactory(iface):  # pylint: disable=invalid-name
@@ -31,5 +36,5 @@ def classFactory(iface):  # pylint: disable=invalid-name
     :type iface: QgisInterface
     """
     #
-    from .StreetAnalysis import StreetAnalysis
+    
     return StreetAnalysis(iface)

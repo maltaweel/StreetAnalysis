@@ -11,15 +11,13 @@ __version__: 1.0
 '''
 Imports needed for this module
 '''
-
-import pysal
-import os
 import sys
 import math
 #import matplotlib.pyplot as plt
 import networkx as nx
 import graph
 import csv
+import pysal as ps
 
 from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtWidgets import QLineEdit
@@ -58,7 +56,7 @@ def load(fileName):
     fileName -- the shapefile name to assess.
     '''
     
-    shp = pysal.open(fileName[0])
+    shp = ps.lib.io.open(fileName[0])
 
     node1=0
     node2=0

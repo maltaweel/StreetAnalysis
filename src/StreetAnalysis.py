@@ -39,16 +39,15 @@ from PyQt5.QtCore import QCoreApplication
 
 
 # Initialize Qt resources from file resources.py
-import resources
 # Import the code for the dialog
-from StreetAnalysis_dialog import StreetAnalysisDialog
-import sys
-import os
+
 import subprocess
-import os.path
+import os
+
 
 import loadApplyModel
-import networkAnalysis
+import networkAnalysis 
+from StreetAnalysis_dialog import StreetAnalysisDialog
 
 class StreetAnalysis:
     """QGIS Plugin Implementation."""
@@ -107,18 +106,23 @@ class StreetAnalysis:
      '''
     def runThis(self):
         app = QApplication([])
+        qid = QFileDialog()
         win = QMainWindow()
         #	win.closeEvent=
-        #	win.setWindowFlags(0)
-        #	win.setFixedSize(QSize(1000,1000))
-        #	win.show()
+        win.setWindowFlags(0)
+        win.setFixedSize(QSize(1000,1000))
+        win.show()
+        
         dir=self.locale_path.split("i18n")[0]
 	
         fine=os.path.join(dir,'help.pdf')
         if os.name=='posix':
-            subprocess.Popen("evince '%s'" % fine, shell=True)
+            subprocess.Popen([fine],shell=True) 
         else:
             os.startfile('example.pdf')
+            
+            
+
 	
     def add_action(
         self,
@@ -250,8 +254,9 @@ class StreetAnalysis:
                 if c.text() == "Street Network Analysis":
                     loadApplyModel.run()
 
-        elif c.text()=="Road Graph Analysis":
-            networkAnalysis.run()
+                elif c.text()=="Road Graph Analysis":
+                    networkAnalysis.run()
 
-        elif c.text()=='?':
-            self.runThis()
+                elif c.text()=='?':
+                    self.runThis()
+            
