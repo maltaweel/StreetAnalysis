@@ -140,7 +140,7 @@ def runLinks(G):
 
 def output(outputFolder,edgesS,G):
     '''
-    Method to do the output of the links travelled.
+    Method to do the output of the links travelled, providing the network as output.
     --outputFolder the output folder to put the results.csv file in
     --edgesS the edges to produce the traveresed outputs from the overall street graph.
     --G the network that is assessed

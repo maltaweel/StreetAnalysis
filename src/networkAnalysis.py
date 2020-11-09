@@ -35,6 +35,8 @@ def getOutuptPath(text2,fileType):
     '''The output files' path determined by the folder to plae the output and the name of the file for output.
     text2 -- the output path for the output folder
     fileType -- the file to output to the output folder
+    
+    fileN -- returns a file path for fileType
     '''
 #   p=os.path.abspath(text2)
     fileN=os.path.join(text2[0],fileType)
@@ -42,6 +44,10 @@ def getOutuptPath(text2,fileType):
 
 def nodez(G):
     '''Method to return two sets of list of nodes in the graph, with both lists being the same.
+    G-- the graph to be analyzed
+    
+    returns the following:
+    
     nodes-- the first list of nodes
     nodes2-- the second list of nodes
     '''
