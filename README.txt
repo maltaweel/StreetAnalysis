@@ -1,6 +1,6 @@
 <b>Libraries Used</b>
 
-Python 3.6+ was used in development of this plugin. The following are the python libraries used and should be installed:
+Python 3.6+ was used in development of this tool. The following are the python libraries used and should be installed:
 
 networkx==2.4
 pysal==2.0.0
