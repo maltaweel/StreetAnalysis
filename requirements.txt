@@ -1,0 +1,4 @@
+networkx==2.4
+pysal==2.0.0
+PyQt4==4.11.4
+PyQt5==5.15.1
