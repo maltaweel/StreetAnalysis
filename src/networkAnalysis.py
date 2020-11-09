@@ -1,6 +1,6 @@
 '''
 Method to conduct the analysis as described in:
-Porta et al. 2006. The network analysis of urban streets: a primal approach. Evironment and Planning B: Planning and Design 33:705-725.
+Porta et al. 2006. The network analysis of urban streets: a primal approach. Environment and Planning B: Planning and Design 33:705-725.
 
 The class conducts efficiency tests on the entire graph and also on nodes. Centrality measures are also conducted. 
 Created on Nov 12, 2018
