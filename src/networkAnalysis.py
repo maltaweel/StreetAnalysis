@@ -72,8 +72,10 @@ def runGlobalEfficiency(G):
             if n2==n:
                 continue
             else:
-                path = nx.shortest_path(G,weight='weight',source=n,target=n2)
-                ide=math.sqrt(math.pow(n[0]-n2[0],2)+math.pow(n[1]-n2[1],2))
+                print(n2)
+                #path = nx.shortest_path(G,weight='weight',source=n,target=n2)
+                path = nx.astar_path(G, n, n2, heuristic=None, weight='weight')
+                ide=math.sqrt(math.pow(math.fabs(n[0]-n2[0]),2)+math.pow(math.fabs(n[1]-n2[1]),2))
                 ideal+=ide
                 
                 path_edges = zip(path,path[1:])
@@ -85,12 +87,10 @@ def runGlobalEfficiency(G):
                 
                 glob+=float(ide/actDistance)
                     
-                    
-                    
-                    
+        nodes2=G.nodes       
+                           
     print("efficiency measure: "+ str(float(glob)/(float(nx.number_of_nodes(G)*(nx.number_of_nodes(G)-1.0)))))
     return float(glob)/(float(nx.number_of_nodes(G)*(nx.number_of_nodes(G)-1.0)))
-
 
 def centralityMeasures(G):
     '''Method does three different centrality measures. This includes betweenness, closeness, and degree centarlity for nodes.
@@ -98,6 +98,10 @@ def centralityMeasures(G):
     '''
     # Betweenness centrality
     bet_cen = nx.betweenness_centrality(G)
+    
+    #edge betweeness centrality
+    bet_c=nx.edge_betweenness_centrality(G, k=None, normalized=True, weight="weight", seed=None)
+    
     # Closeness centrality
     clo_cen = nx.closeness_centrality(G)
     
@@ -105,11 +109,11 @@ def centralityMeasures(G):
     deg_cen = nx.degree_centrality(G)
     
     #print bet_cen, clo_cen, eig_cen
-    print  ("# Betweenness centrality:" + str(bet_cen))
-    print ("# Closeness centrality:" + str(clo_cen))
-    print ("# Degree centrality:" + str(deg_cen))
+    print ("Betweenness centrality:" + str(bet_cen))
+    print ("Closeness centrality:" + str(clo_cen))
+    print ("Degree centrality:" + str(deg_cen))
     
-    return bet_cen,clo_cen,deg_cen
+    return bet_cen,clo_cen,deg_cen, bet_c
 
 def efficiencyCentrality(G):
     '''Method conducts efficiency centrality on the graph.
@@ -128,7 +132,7 @@ def efficiencyCentrality(G):
                 continue
             else:
                 path = nx.shortest_path(G,weight='weight',source=n,target=n2)
-                ideal+=float(1)/float(math.sqrt(math.pow(n[0]-n2[0],2)+math.pow(n[1]-n2[1],2)))
+                ideal+=float(1)/float(math.sqrt(math.pow(math.fabs(n[0]-n2[0]),2)+math.pow(math.fabs(n[1]-n2[1]),2)))
                 
                 path_edges = zip(path,path[1:])
                 actDistance=float(0)
@@ -162,7 +166,7 @@ def straightnessCentrality(G):
                 continue
             else:
                 path = nx.shortest_path(G,weight='weight',source=n,target=n2)
-                ideal+=float(math.sqrt(math.pow(n[0]-n2[0],2)+math.pow(n[1]-n2[1],2)))
+                ideal+=float(math.sqrt(math.pow(math.fabs(n[0]-n2[0]),2)+math.pow(math.fabs(n[1]-n2[1]),2)))
                 
                 path_edges = zip(path,path[1:])
                 actDistance=float(0)
@@ -175,6 +179,7 @@ def straightnessCentrality(G):
         value=float((ideal/glob))/float(nx.number_of_nodes(G)-1.0)
     #    print 'straightness centrality: ' +str(float((ideal/glob))/float(nx.number_of_nodes(G)-1.0))
         results[n]=value
+        nodes2=G.nodes
      
        
     return results
@@ -220,7 +225,7 @@ def printGlobalEfficiency(res,loc,fileType):
 def printNodeCentrality(loc,fileType,bet,cent,degree):
     '''
     Method to print node centrality.
-    loc- the folder location to print out to
+    loc-- the folder location to print out to
     fileType-- the name of the file to print results to
     bet-- the betweenness centality results
     cent-- closeness centrality output
@@ -247,7 +252,41 @@ def printNodeCentrality(loc,fileType,bet,cent,degree):
            
             i+=1
 
+def printEdgeCentrality(loc, results,fileType):
+    
+    '''Method to print betweenness centrality for edges.
+     loc-- the folder location to print out to
+    results-- the node results to convert to edges
+    fileType-- the name of the file to print results to
+    '''
+    
+    filename=getOutuptPath(loc,fileType)
+        
+    fieldnames = ['id','x','y','value']
+        
+    with open(filename, 'w') as csvf:
+        writer = csv.DictWriter(csvf, fieldnames=fieldnames)
 
+        writer.writeheader()
+            
+        i=0
+        for ie in results:
+            
+            value=results[ie]
+            
+            n1=ie[0]
+            n2=ie[1]
+            
+            n1x=n1[0]
+            n1y=n1[1]
+            n2x=n2[0]
+            n2y=n2[1]
+            
+            writer.writerow({'id':i,'x':str(n1x),'y':str(n1y), 'value' :str(value)})
+            writer.writerow({'id':i,'x':str(n2x),'y':str(n2y), 'value' :str(value)})
+           
+            i+=1
+    
 def run():
     '''
     Method to call and run the analysis.
@@ -268,7 +307,7 @@ def run():
     G=loadApplyModel.load(filename)
     res=runGlobalEfficiency(G)
     
-    bet,clos,deg=centralityMeasures(G)
+    bet,clos,deg, bete=centralityMeasures(G)
     
     result1=efficiencyCentrality(G)
     result2=straightnessCentrality(G)
@@ -279,6 +318,7 @@ def run():
     printResults(result2,text2,"straightnessCentrality.csv")
     
     printNodeCentrality(text2,'nodeCentrality.csv',bet,clos,deg)
+    printEdgeCentrality(text2, bete,'edgeBetweenessCentrality.csv')
 
 if __name__ == '__main__':
     run()
