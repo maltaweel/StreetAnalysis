@@ -25,6 +25,10 @@ from PyQt5.QtWidgets import QLineEdit
 from PyQt5.QtWidgets import QInputDialog
 from PyQt5.QtWidgets import QApplication
 
+import pandas as pd
+import geopandas as gpd
+from shapely.geometry import Point, LineString
+
 '''
 the filename for the shapefile analyzed
 '''
@@ -32,7 +36,7 @@ filename=''
 
 
 def getOutuptPath(text2,fileType):
-    '''The output files' path determined by the folder to plae the output and the name of the file for output.
+    '''The output files' path determined by the folder to place the output and the name of the file for output.
     text2 -- the output path for the output folder
     fileType -- the file to output to the output folder
     
@@ -286,7 +290,32 @@ def printEdgeCentrality(loc, results,fileType):
             writer.writerow({'id':i,'x':str(n2x),'y':str(n2y), 'value' :str(value)})
            
             i+=1
-    
+
+def convertToLine(loc,fileType):
+    data=getOutuptPath(loc,fileType)
+    df = pd.read_csv(data)
+
+    #Convert string/text/object time to datetime time
+    #Create XY column
+    df['XY'] = list(zip(df['x'],df['y']))
+
+    #Group by ID. Any aggfunc is possible, python build-in or own. Also possible to have multiple funcs per field.
+    aggfuncs = {'XY':list,'value':'first'}
+    df2 = df.groupby('id').agg(aggfuncs)
+
+    #Create geodataframe
+    geometry = [LineString([Point(p) for p in row]) for row in df2['XY']]
+    crs = {'init':'epsg:4326'}
+    gdf = gpd.GeoDataFrame(df2, crs=crs, geometry=geometry)
+
+    #Export to file
+    gdf.reset_index(inplace=True) #To keep ID column
+    del gdf['XY']
+#   del gdf['value']
+    path_output=getOutuptPath(loc,'path.shp')
+    gdf.to_file(path_output, driver="ESRI Shapefile")    
+
+
 def run():
     '''
     Method to call and run the analysis.
@@ -319,6 +348,8 @@ def run():
     
     printNodeCentrality(text2,'nodeCentrality.csv',bet,clos,deg)
     printEdgeCentrality(text2, bete,'edgeBetweenessCentrality.csv')
+    
+    convertToLine(text2,'edgeBetweenessCentrality.csv')
 
 if __name__ == '__main__':
     run()
