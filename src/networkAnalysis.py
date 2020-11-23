@@ -328,11 +328,18 @@ def run():
     filename = QFileDialog.getOpenFileName()
 
 
-    outputFolder = "Enter the output folder location here."
-    mode = QLineEdit.Normal
+#    outputFolder = "Enter the output folder location here."
+#    mode = QLineEdit.Normal
     #text, ok = QInputDialog.getText(qid,outputFolder,filename, mode)
-    text2 = QInputDialog.getText(qid,filename[0], outputFolder, mode)
-    
+   # text2 = QInputDialog.getText(qid,filename[0], outputFolder, mode)
+    paths=[]
+    pn=os.path.abspath(__file__)
+    pn=pn.split("src")[0]
+    path=os.path.join(pn,'output')
+    paths.append(path)
+    paths.append(pn)
+    text2 = QInputDialog.getItem(qid,"Folder Dialog", "Select Folder", paths, 0, False)
+  
     G=loadApplyModel.load(filename)
     res=runGlobalEfficiency(G)
     

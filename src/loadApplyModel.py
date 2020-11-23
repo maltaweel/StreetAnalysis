@@ -8,10 +8,12 @@ __version__: 1.0
 
 '''
 
+
 '''
 Imports needed for this module
 '''
 import sys
+import os
 import math
 #import matplotlib.pyplot as plt
 import networkx as nx
@@ -47,6 +49,9 @@ nodesS=[]
 Container for links with their link weights
 '''
 linkz={}
+
+ids={}
+
 
 
 def load(fileName):
@@ -95,7 +100,8 @@ def load(fileName):
             link=(node1,node2,weight)
             link2=(node1,node2)
             links.append(link)
-            linkz[str(link2)]=link
+            linkz[link2]=link
+            ids[link2]=s.id
            
                 
                 
@@ -123,7 +129,7 @@ def runLinks(G):
             if n2==n:
                 continue
             else:
-                path = nx.shortest_path(G,weight='weight',source=n,target=n2)
+                path=nx.astar_path(G, n, n2, heuristic=None, weight='weight')
                 path_edges = zip(path,path[1:])
                 
                 for e in path_edges:
@@ -156,15 +162,16 @@ def output(outputFolder,edgesS,G):
 
         writer.writeheader()
             
-        i=0
+        
         for ie in linkz:
-            count=edgesS[ie]
+            count=edgesS[str(ie)]
             link=linkz[ie]
             node1=link[0]
             node2=link[1]
+            i=ids[(node1,node2)]
             writer.writerow({'id':i,'x':str(node1[0]),'y':str(node1[1]), 'count' :str(count)})
             writer.writerow({'id':i,'x':str(node2[0]),'y':str(node2[1]), 'count' :str(count)})
-            i+=1
+           
             print("Edges:"+ str(ie))
         
 #    nx.draw_networkx_nodes(G,pos,nodelist=path,node_color='r')
@@ -200,11 +207,19 @@ def run():
 #    fileName = "Enter the file to analyise here."
     filename=QFileDialog.getOpenFileName()
 
-    outputFolder = "Enter the output folder location here."
-    mode = QLineEdit.Normal
+#    outputFolder = "Enter the output folder location here."
+ #   mode = QLineEdit.Normal
 #    text, ok = QInputDialog.getText(qid,outputFolder,fileName, mode)
-    text2 = QInputDialog.getText(qid,filename[0], outputFolder, mode)
-
+ #   text2 = QInputDialog.getText(qid,filename[0], outputFolder, mode)
+    paths=[]
+    pn=os.path.abspath(__file__)
+    pn=pn.split("src")[0]
+    path=os.path.join(pn,'output')
+    paths.append(path)
+    paths.append(pn)
+    
+    text2 = QInputDialog.getItem(qid,"Folder Dialog", "Select Folder", paths, 0, False)
+  
 
     G=load(filename)
     edgesS=runLinks(G)
