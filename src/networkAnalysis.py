@@ -226,7 +226,7 @@ def printGlobalEfficiency(res,loc,fileType):
     f.write("Global Efficiency: "+str(res))
     
     
-def printNodeCentrality(loc,fileType,bet,cent,degree):
+def printNodeCentrality(loc,fileType,bet,cent,degree, results1, results2):
     '''
     Method to print node centrality.
     loc-- the folder location to print out to
@@ -237,7 +237,8 @@ def printNodeCentrality(loc,fileType,bet,cent,degree):
     '''
     fileN=getOutuptPath(loc,fileType)
      
-    fieldnames = ['id','x','y','betweenness','closeness','degree']
+    fieldnames = ['id','x','y','betweenness','closeness','degree','efficiency',
+                 'straightness' ]
         
     with open(fileN, 'w') as csvf:
         writer = csv.DictWriter(csvf, fieldnames=fieldnames)
@@ -250,9 +251,13 @@ def printNodeCentrality(loc,fileType,bet,cent,degree):
             value1=bet[ie]
             value2=cent[ie]
             value3=degree[ie]
+            value4=results1[ie]
+            value5=results2[ie]
             
             writer.writerow({'id':i,'x':str(ie[0]),'y':str(ie[1]),
-                             'betweenness':str(value1),'closeness':str(value2),'degree':str(value3)})
+                             'betweenness':str(value1),'closeness':str(value2),
+                             'degree':str(value3),'efficiency':str(value4),
+                             'straightness':str(value5)})
            
             i+=1
 
@@ -312,7 +317,7 @@ def convertToLine(loc,fileType):
     gdf.reset_index(inplace=True) #To keep ID column
     del gdf['XY']
 #   del gdf['value']
-    path_output=getOutuptPath(loc,'path.shp')
+    path_output=getOutuptPath(loc,'road_data.shp')
     gdf.to_file(path_output, driver="ESRI Shapefile")    
 
 
@@ -348,15 +353,18 @@ def run():
     result1=efficiencyCentrality(G)
     result2=straightnessCentrality(G)
     
-    
+    #do centrality outputs to .csv files
     printGlobalEfficiency(res,text2,'globalEfficiency.csv')
     printResults(result1,text2,"efficiencyCentrality.csv")
     printResults(result2,text2,"straightnessCentrality.csv")
     
-    printNodeCentrality(text2,'nodeCentrality.csv',bet,clos,deg)
+    printNodeCentrality(text2,'nodeCentrality.csv',bet,clos,deg,result1, result2)
     printEdgeCentrality(text2, bete,'edgeBetweenessCentrality.csv')
     
+    #convert betweeness edge values to .shp file
     convertToLine(text2,'edgeBetweenessCentrality.csv')
+    
+
 
 if __name__ == '__main__':
     run()
