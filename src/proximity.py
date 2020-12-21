@@ -21,9 +21,16 @@ from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtWidgets import QInputDialog
 from PyQt5.QtWidgets import QApplication
 
+#closeness centrality values
 closeness={}
+
+#degree centrality values
 degree={}
+
+#efficiency centrality values
 efficiency={}
+
+#straightness centrality values
 straightness={}
 '''
 Method to get the output path
@@ -63,7 +70,12 @@ def readCentres():
         
     return xs, values
 
+'''
+Method that reads .csv centrality values (closeness, degree, efficiency, and straightness)
+and then matches the nodes to the closest centre point values of structures.
 
+@param xss- The polygon data for structures which have centre point data.
+'''
 def readOutputs(xss):
     path=getPath()
     pathway=os.path.join(path,'nodeCentrality.csv')
