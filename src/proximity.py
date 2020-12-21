@@ -9,16 +9,22 @@ Created on Nov 30, 2020
 @author: maltaweel
 '''
 import sys
+import math
 import numpy as np
 import geopandas as gpd
 from shapely.geometry import Point
 import os
+import csv
 import pandas as pd
 
 from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtWidgets import QInputDialog
 from PyQt5.QtWidgets import QApplication
 
+closeness={}
+degree={}
+efficiency={}
+straightness={}
 '''
 Method to get the output path
 '''
@@ -57,6 +63,42 @@ def readCentres():
         
     return xs, values
 
+
+def readOutputs(xss):
+    path=getPath()
+    pathway=os.path.join(path,'nodeCentrality.csv')
+    
+    
+    with open(os.path.join(pathway),'rU') as csvfile:
+            reader = csv.DictReader(csvfile)
+            
+           
+            for row in reader:
+                cls=row['closeness']
+                dgr=row['degree']
+                eff=row['efficiency']
+                strr=row['straightness']
+                x=row['x']
+                y=row['y']
+                
+                distance=float('inf')
+                for i in xss:
+                    gg=xss[i]
+                    
+                    if gg is None:
+                        continue
+                    
+                    dd=math.sqrt(math.pow((gg.x-float(x)),2.0) + math.pow((gg.y-float(y)),2.0))
+                    
+                    if dd<distance:
+                        closeness[str(gg.x)+':'+str(gg.y)]=cls
+                        degree[str(gg.x)+':'+str(gg.y)]=dgr
+                        efficiency[str(gg.x)+':'+str(gg.y)]=eff
+                        straightness[str(gg.x)+':'+str(gg.y)]=strr
+                        distance=dd
+    
+   
+   
 '''
 Method to get a polygon shapefile.
 
@@ -92,7 +134,6 @@ def findBestFits(xss,yss,vls):
         gg=yss[idd]
         
         distance=float('inf')
-        val=0.0
         
         for idz in xss:
             gg2=xss[idz]
@@ -164,15 +205,28 @@ def doValueOutputs(keep, keeps, twinings, values):
         x=xxyy.split(':')[0]
         y=xxyy.split(':')[1]
         v=outs[xxyy]
+        
         inpt=[]
+        
+        cc=closeness[xxyy]
+        dd=degree[xxyy]
+        ee=efficiency[xxyy]
+        ss=straightness[xxyy]
+        
         inpt.append(float(x))
         inpt.append(float(y))
         inpt.append(float(v))
+        inpt.append(float(cc))
+        inpt.append(float(dd))
+        inpt.append(float(ee))
+        inpt.append(float(ss))
+        
         vs.append(inpt)
 
         
     numpy_point_array = np.array(vs)    
-    df = pd.DataFrame(numpy_point_array, columns=['X','Y','Value'])
+    df = pd.DataFrame(numpy_point_array, columns=['X','Y','Betweeness','Closeness',
+                                                  'Degree','Efficiency','Straightness'])
         
     
     crs = {'init': 'EPSG:4326'}
@@ -190,10 +244,12 @@ def run():
    
     #method to read centre points of road data
     xs, vals=readCentres()
-    
+     
     #method to read the polygons
     xss=readPolygons()
     
+    readOutputs(xss)
+     
     #method to find the best and nearest fits between road centres and polygon centres
     keep, keeps, twinings, values=findBestFits(xss,xs,vals)
     
