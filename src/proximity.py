@@ -260,6 +260,7 @@ def run():
     #method to read the polygons
     xss=readPolygons()
     
+    #do other centrality measures and assign to centroids for polygons
     readOutputs(xss)
      
     #method to find the best and nearest fits between road centres and polygon centres
