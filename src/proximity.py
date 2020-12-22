@@ -103,10 +103,36 @@ def readOutputs(xss):
                     dd=math.sqrt(math.pow((gg.x-float(x)),2.0) + math.pow((gg.y-float(y)),2.0))
                     
                     if dd<distance:
-                        closeness[str(gg.x)+':'+str(gg.y)]=cls
-                        degree[str(gg.x)+':'+str(gg.y)]=dgr
-                        efficiency[str(gg.x)+':'+str(gg.y)]=eff
-                        straightness[str(gg.x)+':'+str(gg.y)]=strr
+                        
+                        #check to see existing value
+                        if str(gg.x)+':'+str(gg.y) in closeness:
+                            vv=closeness[str(gg.x)+':'+str(gg.y)]
+                            if vv<cls:
+                                vv=closeness[str(gg.x)+':'+str(gg.y)]
+                        else:
+                            closeness[str(gg.x)+':'+str(gg.y)]=cls
+                        
+                        if str(gg.x)+':'+str(gg.y) in degree:
+                            vv=degree[str(gg.x)+':'+str(gg.y)]
+                            if vv<dgr:
+                                degree[str(gg.x)+':'+str(gg.y)]=dgr
+                        else:   
+                            degree[str(gg.x)+':'+str(gg.y)]=dgr
+                        
+                        if str(gg.x)+':'+str(gg.y) in efficiency:
+                            vv=efficiency[str(gg.x)+':'+str(gg.y)]
+                            if vv<eff:
+                                efficiency[str(gg.x)+':'+str(gg.y)]=eff
+                        else:   
+                            efficiency[str(gg.x)+':'+str(gg.y)]=eff    
+                        
+                        if str(gg.x)+':'+str(gg.y) in straightness:
+                            vv=straightness[str(gg.x)+':'+str(gg.y)]
+                            if vv<strr:
+                                straightness[str(gg.x)+':'+str(gg.y)]=strr
+                        else:   
+                            straightness[str(gg.x)+':'+str(gg.y)]=strr 
+                            
                         distance=dd
     
    
@@ -201,6 +227,8 @@ def doValueOutputs(keep, keeps, twinings, values):
    
     vs=[]
     
+    #go through street segment center ponits and polygon centre points
+    #then match best fit and value
     outs={}
     for k in keeps:
         gg2=twinings[str(k.x)+':'+str(k.y)]
@@ -220,21 +248,26 @@ def doValueOutputs(keep, keeps, twinings, values):
         
         inpt=[]
         
-        cc=closeness[xxyy]
-        dd=degree[xxyy]
-        ee=efficiency[xxyy]
-        ss=straightness[xxyy]
+        try:
+            cc=closeness[xxyy]
+            dd=degree[xxyy]
+            ee=efficiency[xxyy]
+            ss=straightness[xxyy]
         
-        inpt.append(float(x))
-        inpt.append(float(y))
-        inpt.append(float(v))
-        inpt.append(float(cc))
-        inpt.append(float(dd))
-        inpt.append(float(ee))
-        inpt.append(float(ss))
+            inpt.append(float(x))
+            inpt.append(float(y))
+            inpt.append(float(v))
+            inpt.append(float(cc))
+            inpt.append(float(dd))
+            inpt.append(float(ee))
+            inpt.append(float(ss))
         
-        vs.append(inpt)
-
+            vs.append(inpt)
+        
+        #handle exception
+        except:
+            print(xxyy)
+            continue
         
     numpy_point_array = np.array(vs)    
     df = pd.DataFrame(numpy_point_array, columns=['X','Y','Betweeness','Closeness',
