@@ -58,10 +58,15 @@ def readCentres():
    
     xs={}
     values={}
+    
+    #read file and get geometry
     for i in range(0,len(zones)):
         idd=zones.id[i]
         
+        #return centroid
         g = zones.geometry.centroid[i]
+        
+        #return the centroid betweeness value
         f = zones.value[i]
         
         xs[idd]=g
@@ -86,6 +91,8 @@ def readOutputs(xss):
             
            
             for row in reader:
+                
+                #get the .csv centrality values
                 cls=row['closeness']
                 dgr=row['degree']
                 eff=row['efficiency']
@@ -109,9 +116,12 @@ def readOutputs(xss):
                             vv=closeness[str(gg.x)+':'+str(gg.y)]
                             if vv<cls:
                                 vv=closeness[str(gg.x)+':'+str(gg.y)]
+                                
+                        #else apply the centrality value
                         else:
                             closeness[str(gg.x)+':'+str(gg.y)]=cls
                         
+                        #same for the other centrality values as closeness 
                         if str(gg.x)+':'+str(gg.y) in degree:
                             vv=degree[str(gg.x)+':'+str(gg.y)]
                             if vv<dgr:
@@ -196,8 +206,9 @@ def findBestFits(xss,yss,vls):
                 twinings[str(gg.x)+':'+str(gg.y)]=gg2
                 
                 values[str(gg.x)+':'+str(gg.y)]=value
-                
-    return keep, keeps, twinings, values
+            
+         
+    return keeps, twinings, values
                 
 '''
 Method to get and then call the readers for polygons.
@@ -218,12 +229,12 @@ def readPolygons():
 '''
 Output the values for polygon centre points to a shapefile.
 
-@param keep- The road segment map
 @param keeps- The road segment list
 @param twining- The road segment associated with a polygon centre point
 @param values- The assigned polygon centre values
+@param xss- centre point values from polygons
 '''
-def doValueOutputs(keep, keeps, twinings, values):
+def doValueOutputs(keeps, twinings, values, xss):
    
     vs=[]
     
@@ -232,7 +243,7 @@ def doValueOutputs(keep, keeps, twinings, values):
     outs={}
     for k in keeps:
         gg2=twinings[str(k.x)+':'+str(k.y)]
-        d=keep[str(k.x)+':'+str(k.y)]
+    
         v=values[str(k.x)+':'+str(k.y)]    
         if str(gg2.x)+':'+str(gg2.y) not in outs:
             outs[str(gg2.x)+':'+str(gg2.y)]=v
@@ -241,18 +252,40 @@ def doValueOutputs(keep, keeps, twinings, values):
             if v>vv:
                 outs[str(gg2.x)+':'+str(gg2.y)]=v
         
-    for xxyy in outs:
-        x=xxyy.split(':')[0]
-        y=xxyy.split(':')[1]
-        v=outs[xxyy]
+    for i in xss:
+        xs=xss[i]
         
+        if xs is None:
+            continue
+        
+        x=xs.centroid.x
+        y=xs.centroid.y
+        
+        v=0.0
+        if str(x)+':'+str(y) in outs:
+            v=outs[str(x)+':'+str(y)]
+        
+        #input used to make shapefile
         inpt=[]
         
         try:
-            cc=closeness[xxyy]
-            dd=degree[xxyy]
-            ee=efficiency[xxyy]
-            ss=straightness[xxyy]
+            cc=0.0
+            dd=0.0
+            ee=0.0
+            ss=0.0
+            
+            #check to see if points are there for centrality values
+            if str(x)+':'+str(y) in closeness:
+                cc=closeness[str(x)+':'+str(y)]
+            
+            if str(x)+':'+str(y) in degree:
+                dd=degree[str(x)+':'+str(y)]
+            
+            if str(x)+':'+str(y) in efficiency:
+                ee=efficiency[str(x)+':'+str(y)]
+            
+            if str(x)+':'+str(y) in closeness:
+                ss=straightness[str(x)+':'+str(y)]
         
             inpt.append(float(x))
             inpt.append(float(y))
@@ -266,14 +299,17 @@ def doValueOutputs(keep, keeps, twinings, values):
         
         #handle exception
         except:
-            print(xxyy)
+            print(str(x)+':'+str(y))
             continue
-        
-    numpy_point_array = np.array(vs)    
+    
+    #add the shapefile points (point shapefile)    
+    numpy_point_array = np.array(vs)
+    
+    #add frame and data
     df = pd.DataFrame(numpy_point_array, columns=['X','Y','Betweeness','Closeness',
                                                   'Degree','Efficiency','Straightness'])
         
-    
+    #crs and get file data to output shapfile in desired directory (in output folder)
     crs = {'init': 'EPSG:4326'}
     gdf = gpd.GeoDataFrame(
     df, crs=crs,geometry=gpd.points_from_xy(df.X, df.Y))       
@@ -297,10 +333,10 @@ def run():
     readOutputs(xss)
      
     #method to find the best and nearest fits between road centres and polygon centres
-    keep, keeps, twinings, values=findBestFits(xss,xs,vals)
+    keeps, twinings, values=findBestFits(xss,xs,vals)
     
     #method to output results
-    doValueOutputs(keep, keeps, twinings, values)
+    doValueOutputs(keeps, twinings, values, xss)
 
 '''
 The main to run the module.
