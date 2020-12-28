@@ -317,7 +317,7 @@ def convertToLine(loc,fileType):
     gdf.reset_index(inplace=True) #To keep ID column
     del gdf['XY']
 #   del gdf['value']
-    path_output=getOutuptPath(loc,'road_data.shp')
+    path_output=getOutuptPath(loc,'betweeness_road_data.shp')
     gdf.to_file(path_output, driver="ESRI Shapefile")    
 
 
