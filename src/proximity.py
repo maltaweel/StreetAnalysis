@@ -32,6 +32,9 @@ efficiency={}
 
 #straightness centrality values
 straightness={}
+
+#types of structures
+types={}
 '''
 Method to get the output path
 '''
@@ -161,6 +164,10 @@ def loadShapeFile(shpFile):
     for i in range(0,len(polygons)):
         idd=polygons.id[i]
         c= polygons.geometry.centroid[i]
+        t= polygons.Type[i]
+        
+        if t is not None:
+            types[str(c.x)+':'+str(c.y)]=t
        
         xs[idd]=c
     
@@ -194,7 +201,9 @@ def findBestFits(xss,yss,vls):
             
             points_df = gpd.GeoDataFrame({'geometry': [gg, gg2]}, crs='EPSG:4326')
             points_df = points_df.to_crs('EPSG:4326')
-            points_df2 = points_df.shift() #We shift the dataframe by 1 to align pnt1 with pnt2
+            
+            #We shift the dataframe by 1 to align pnt1 with pnt2
+            points_df2 = points_df.shift() 
             d=points_df.distance(points_df2)
             dd=d.array[1]
             value=vls[str(gg.x)+':'+str(gg.y)]
@@ -206,7 +215,7 @@ def findBestFits(xss,yss,vls):
                 twinings[str(gg.x)+':'+str(gg.y)]=gg2
                 
                 values[str(gg.x)+':'+str(gg.y)]=value
-            
+                
          
     return keeps, twinings, values
                 
@@ -244,7 +253,8 @@ def doValueOutputs(keeps, twinings, values, xss):
     for k in keeps:
         gg2=twinings[str(k.x)+':'+str(k.y)]
     
-        v=values[str(k.x)+':'+str(k.y)]    
+        v=values[str(k.x)+':'+str(k.y)]
+        
         if str(gg2.x)+':'+str(gg2.y) not in outs:
             outs[str(gg2.x)+':'+str(gg2.y)]=v
         else:
@@ -273,6 +283,7 @@ def doValueOutputs(keeps, twinings, values, xss):
             dd=0.0
             ee=0.0
             ss=0.0
+            tt=''
             
             #check to see if points are there for centrality values
             if str(x)+':'+str(y) in closeness:
@@ -286,6 +297,9 @@ def doValueOutputs(keeps, twinings, values, xss):
             
             if str(x)+':'+str(y) in closeness:
                 ss=straightness[str(x)+':'+str(y)]
+                
+            if str(x)+':'+str(y) in types:
+                tt=types[str(x)+':'+str(y)]
         
             inpt.append(float(x))
             inpt.append(float(y))
@@ -294,6 +308,7 @@ def doValueOutputs(keeps, twinings, values, xss):
             inpt.append(float(dd))
             inpt.append(float(ee))
             inpt.append(float(ss))
+            inpt.append(str(tt))
         
             vs.append(inpt)
         
@@ -307,7 +322,7 @@ def doValueOutputs(keeps, twinings, values, xss):
     
     #add frame and data
     df = pd.DataFrame(numpy_point_array, columns=['X','Y','Betweeness','Closeness',
-                                                  'Degree','Efficiency','Straightness'])
+                                                  'Degree','Efficiency','Straightness','Type'])
         
     #crs and get file data to output shapfile in desired directory (in output folder)
     crs = {'init': 'EPSG:4326'}
