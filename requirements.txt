@@ -1,4 +1,4 @@
 networkx==2.4
 pysal==2.0.0
-Geopandas==0.8.1
+Geopandas==1.1.2
 PyQt5==5.15.1
